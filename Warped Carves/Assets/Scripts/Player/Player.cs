@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Transform firePoint;
 
     [Header("Inputs")]
     [SerializeField] private float moveInput;
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
+
+        HandleAnimations();
     }
 
     private void FixedUpdate()
@@ -51,9 +55,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    void HandleAnimations()
+    {
+        animator.SetFloat("Speed",Mathf.Abs(moveInput));
+        animator.SetBool("isJumping", rb.linearVelocity.y > 0.1);
+    }
+
     void Flip()
     {
         facingDirection *= -1;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y,transform.localScale.z);
+        firePoint.Rotate(0, 180f, 0);
     }
 }
