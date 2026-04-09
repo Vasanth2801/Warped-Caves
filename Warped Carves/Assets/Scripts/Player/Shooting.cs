@@ -9,7 +9,6 @@ public class Shooting : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private ObjectPooler pooler;
 
-
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.K))

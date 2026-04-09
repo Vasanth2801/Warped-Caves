@@ -18,6 +18,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform firePoint;
 
+    [Header("Crouch Settings")]
+    [SerializeField] private CapsuleCollider2D capsuleCollider;
+    [SerializeField] private bool isCrouching;
+    [SerializeField] private Vector2 normalSize;
+    [SerializeField] private Vector2 crouchSize;
+
     [Header("Inputs")]
     [SerializeField] private float moveInput;
 
@@ -38,6 +44,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+
+        CrouchDown();
+
+        CrouchUp();
     }
 
     void Move()
@@ -52,6 +62,26 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
+    }
+
+    void CrouchDown()
+    {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            isCrouching = true;
+            animator.SetBool("isCrouching", true);
+            capsuleCollider.size = crouchSize;
+        }
+    }
+
+    void CrouchUp()
+    {
+        if(Input.GetKeyUp(KeyCode.S))
+        {
+            isCrouching = false;
+            animator.SetBool("isCrouching", false);
+            capsuleCollider.size = normalSize;
         }
     }
 
