@@ -28,12 +28,15 @@ public class ObjectPooler : MonoBehaviour
                 obj.SetActive(false);
                 objPool.Enqueue(obj);
             }
+
+            poolsOfDictionary.Add(pool.objectTag, objPool);
         }
     }
 
     public GameObject SpawnFromPools(string tag, Vector3 position, Quaternion rotation)
     {
         GameObject objToSpawn = poolsOfDictionary[tag].Dequeue();
+        objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
 
